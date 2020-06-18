@@ -1,10 +1,10 @@
 import tweepy
+import config
 from tweepy.auth import OAuthHandler
 import time
 
-auth = OAuthHandler('RvAikq5sj6tPD5K6HNR57oYnL', 'TMi8zdSZUs3u6QJUN63kGdXJ7h7OXOcVRXgilwGK6GyOLD5Cc4')
-auth.set_access_token('878891720213016578-CllFoXUibZcujyZ6DZo1ZP4veVwpwao',
-                     '7CAFwbxlaLvAtuGy0XHrWaDaNctu9mOgbug86xcD6zgHX')
+auth = OAuthHandler(config.api_key, config.api_secret)
+auth.set_access_token(config.access_token, config.token_secret)
 
 api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True)
 
@@ -14,7 +14,7 @@ user = api.me()
 '''for follower in tweepy.Cursor(api.followers).items():
     print(follower.name)'''
 search = 'OpenSource'
-nTweets=500
+nTweets = 500
 
 for tweet in tweepy.Cursor(api.search, search).items(nTweets):
     try:
@@ -25,4 +25,3 @@ for tweet in tweepy.Cursor(api.search, search).items(nTweets):
         print(e.reason)
     except StopIteration:
         break
-
